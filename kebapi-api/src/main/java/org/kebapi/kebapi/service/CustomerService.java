@@ -1,61 +1,90 @@
 package org.kebapi.kebapi.service;
 
-import org.kebapi.kebapi.dto.CustomerDto;
+
+import org.kebapi.kebapi.dto.CustomerInDto;
+import org.kebapi.kebapi.dto.CustomerOutDto;
+import org.kebapi.kebapi.dto.CustomerRegistrationDto;
 import org.kebapi.kebapi.entity.Customer;
+import org.kebapi.kebapi.exception.CustomerNotFoundException;
 import org.kebapi.kebapi.repository.CustomerRepository;
+import org.modelmapper.ModelMapper;
+import jakarta.persistence.criteria.Predicate;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
 
   @Autowired
   private CustomerRepository customerRepository;
+  @Autowired
+  private ModelMapper modelMapper;
+  public List<CustomerOutDto> getAll(String name, String email) {
+    List<Customer> customerList;
 
-  public List<CustomerDto> findAll() {
-    // Obtienes todos los clientes desde el repositorio
-    List<Customer> customers = customerRepository.findAll();
+    if (name == null && email == null) {
+      customerList = customerRepository.findAll();
+    } else if (email == null) {
+      customerList = customerRepository.findByName(name);
+    } else if (name == null) {
+      customerList = customerRepository.findByEmail(email);
+    } else {
+      customerList = customerRepository.findByNameAndEmail(name, email);
+    }
 
-    // Convertir cada cliente a CustomerDto
-    return customers.stream()
-        .map(customer -> new CustomerDto(customer.getId(), customer.getName(), customer.getEmail(), customer.getPhone(), customer.getPassword()))
-        .collect(Collectors.toList());
+    return modelMapper.map(customerList, new TypeToken<List<CustomerOutDto>>() {
+    }.getType());
   }
 
-  public CustomerDto addCustomer(CustomerDto customerDto) {
-    // Convierte CustomerDto a Customer
-    Customer customer = new Customer(customerDto.getId(), customerDto.getName(), customerDto.getEmail(), customerDto.getPhone(), customerDto.getPassword());
-
-    // Guarda el cliente en la base de datos
-    customer = customerRepository.save(customer);
-
-    // Convierte el cliente guardado a CustomerDto y lo retorna
-    return new CustomerDto(customer.getId(), customer.getName(), customer.getEmail(), customer.getPhone(), customer.getPassword());
+  public Customer get(long id) throws CustomerNotFoundException {
+    return customerRepository.findById(id)
+        .orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + id + " does not exist"));
   }
 
-  public CustomerDto modify(long customerId, CustomerDto customerDto) {
-    // Buscar el cliente por ID
-    Customer customer = customerRepository.findById(String.valueOf(customerId))
-        .orElseThrow(() -> new RuntimeException("Customer not found"));
+  public CustomerOutDto add(CustomerRegistrationDto customerInDto) {
+    Customer customer = modelMapper.map(customerInDto, Customer.class);
+    Customer newCustomer = customerRepository.save(customer);
 
-    // Modificar los datos del cliente
-    customer.setName(customerDto.getName());
-    customer.setEmail(customerDto.getEmail());
-    customer.setPhone(customerDto.getPhone());
-    customer.setPassword(customerDto.getPassword());
-
-    // Guardar el cliente modificado
-    customer = customerRepository.save(customer);
-
-    // Retornar el cliente modificado como CustomerDto
-    return new CustomerDto(customer.getId(), customer.getName(), customer.getEmail(), customer.getPhone(), customer.getPassword());
+    return modelMapper.map(newCustomer, CustomerOutDto.class);
   }
 
-  public void deleteCustomer(long customerId) {
-    // Eliminar el cliente por su ID
-    customerRepository.deleteById(String.valueOf(customerId));
+  public List<Customer> getCustomersByFilter(String name, String email,String phone, String password) {
+    return customerRepository.findAll((root, query, criteriaBuilder) -> {
+      Predicate predicate = criteriaBuilder.conjunction();
+
+      if (name != null && !name.isEmpty()) {
+        predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+      }
+      if (email != null && !email.isEmpty()) {
+        predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("email"), "%" + email + "%"));
+      }
+      if (phone != null && !phone.isEmpty()) {
+        predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("phone"), "%" + phone + "%"));
+      }
+      if (password != null && !password.isEmpty()) {
+        predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("password"), "%" + password + "%"));
+      }
+      return predicate;
+    });
+  }
+
+  public CustomerOutDto modify(long customerId, CustomerInDto customerInDto) throws CustomerNotFoundException {
+    Customer customer = customerRepository.findById(customerId)
+        .orElseThrow(CustomerNotFoundException::new);
+
+    modelMapper.map(customerInDto, customer);
+    customerRepository.save(customer);
+
+    return modelMapper.map(customer, CustomerOutDto.class);
+  }
+
+
+  public void remove(long customerId) throws CustomerNotFoundException {
+    customerRepository.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+    customerRepository.deleteById(customerId);
   }
 }
