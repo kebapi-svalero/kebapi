@@ -1,0 +1,126 @@
+/* General styles */
+body {
+    background-color: #f8f9fa; /* Fondo claro */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+h1, h2 {
+    color: #495057;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+.btn {
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 10px 15px;
+}
+
+.btn-success {
+    background-color: #198754;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5c636a;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+table th {
+    background-color: #198754;
+    color: #ffffff;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons in tables */
+.table-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.table-btn.edit {
+    background-color: #0d6efd;
+}
+
+.table-btn.delete {
+    background-color: #dc3545;
+}
+
+.table-btn.edit:hover {
+    background-color: #0b5ed7;
+}
+
+.table-btn.delete:hover {
+    background-color: #bb2d3b;
+}
+
+/* Center container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
