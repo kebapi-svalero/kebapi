@@ -27,7 +27,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.menuitem_view_item, parent, false);
+                .inflate(R.layout.item_view_item, parent, false);
         return new ItemHolder(view);
     }
 
@@ -56,7 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
         return itemList.size();
     }
 
-    public List<Item> getSelectedMenuItems() {
+    public List<Item> getSelectedItems() {
         return selectedMenuItems;  // Return the list of selected menu items
     }
 
@@ -71,7 +71,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
             name = itemView.findViewById(R.id.item_name);
             description = itemView.findViewById(R.id.item_description);
-            radioButton = itemView.findViewById(R.id.radioButton);  // Assuming you have a RadioButton in your item layout
         }
     }
 }
