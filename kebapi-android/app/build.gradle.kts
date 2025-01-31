@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kebapi_android"
+    namespace = "com.kebapi_android"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.kebapi_android"
+        applicationId = "com.kebapi_android"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kebapi_android.R;
+import com.kebapi_android.R;
 import com.kebapi_android.adapter.ItemAdapter;
 import com.kebapi_android.contract.ItemListContract;
 import com.kebapi_android.domain.Item;

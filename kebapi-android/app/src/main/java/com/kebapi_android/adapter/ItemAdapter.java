@@ -8,7 +8,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.kebapi_android.R;
+import com.kebapi_android.R;
 import com.kebapi_android.domain.Item;
 
 import java.util.ArrayList;

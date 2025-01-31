@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.kebapi_android.R;
+import com.kebapi_android.R;
 import com.kebapi_android.contract.RegisterCustomerContract;
 import com.kebapi_android.presenter.RegisterCustomerPresenter;
 import com.kebapi_android.domain.Customer;
