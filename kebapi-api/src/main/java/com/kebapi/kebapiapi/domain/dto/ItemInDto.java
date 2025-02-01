@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemInDto {
-    private long id;
     private String name;
     private String description;
     private Float price;
