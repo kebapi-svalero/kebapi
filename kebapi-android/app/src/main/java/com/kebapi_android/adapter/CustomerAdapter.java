@@ -23,8 +23,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
     @NotNull
     @Override
     public CustomerAdapter.CustomerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.customer_view_item, parent, false);
+        View view = null;
         return new CustomerHolder(view);
     }
 
@@ -46,9 +45,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 
         public CustomerHolder(@NonNull View itemView) {
             super(itemView);
-
-            username = itemView.findViewById(R.id.item_username);
-            phone = itemView.findViewById(R.id.item_phone);
         }
     }
 }

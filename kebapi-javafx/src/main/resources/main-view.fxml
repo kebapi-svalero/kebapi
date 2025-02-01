@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controller.MainController">
+    <TableView fx:id="tableView" layoutX="20.0" layoutY="20.0" prefHeight="400.0" prefWidth="560.0">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" />
+            <TableColumn fx:id="nameColumn" text="Name" />
+            <TableColumn fx:id="descriptionColumn" text="Description" />
+            <TableColumn fx:id="priceColumn" text="Price" />
+            <TableColumn fx:id="vegetarianColumn" text="Vegetarian" />
+        </columns>
+    </TableView>
+    <!-- ImageView para mostrar la imagen -->
+    <ImageView fx:id="imageView" layoutX="600.0" layoutY="20.0" fitWidth="300.0" fitHeight="300.0" />
+</AnchorPane>
