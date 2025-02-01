@@ -1,5 +1,7 @@
 package com.kebapi_android.model;
 
+import android.util.Log;
+
 import com.kebapi_android.api.CustomersApi;
 import com.kebapi_android.api.CustomersApiInterface;
 import com.kebapi_android.contract.CustomerListContract;
@@ -30,6 +32,7 @@ public class CustomerListModel implements CustomerListContract.Model {
 
             @Override
             public void onFailure(Call<List<Customer>> call, Throwable t) {
+                Log.e("loadCustomers", "error", t);
                 listener.onLoadCustomerFailed("No se puedo conectar con el origen de datos. " +
                         "Comprueba la conexión e inténtalo otra vez");
             }
@@ -54,6 +57,7 @@ public class CustomerListModel implements CustomerListContract.Model {
 
             @Override
             public void onFailure(Call<Customer> call, Throwable t) {
+                Log.e("loadCustomer", "error", t);
                 listener.onLoadCustomerFailed("No se puedo conectar con el origen de datos. " +
                         "Comprueba la conexión e inténtalo otra vez");
             }

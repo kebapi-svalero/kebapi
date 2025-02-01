@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.kebapi_android.R;
 import com.kebapi_android.contract.CustomerListContract;
 import com.kebapi_android.domain.Customer;
@@ -86,8 +87,6 @@ public class EditCustomer extends AppCompatActivity implements CustomerListContr
     }
 
     @Override
-    public void showSuccessMessage(String message) {
-
+    public void showSuccessMessage(String message){
     }
 }
-

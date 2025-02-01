@@ -1,6 +1,5 @@
 package com.kebapi_android.adapter;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.kebapi_android.R;
 import com.kebapi_android.domain.Item;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
     private List<Item> itemList;
-    private List<Item> selectedMenuItems = new ArrayList<>();  // To track the selected menu items
+    private OnItemClickListener onItemClickListener; // Interface for click handling
 
-    public ItemAdapter(List<Item> menuItemList) {
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
+    }
+
+    public ItemAdapter(List<Item> menuItemList, OnItemClickListener listener) {
         this.itemList = menuItemList;
+        this.onItemClickListener = listener;
     }
 
     @NonNull
@@ -37,17 +39,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
         holder.name.setText(item.getName());
         holder.description.setText(item.getDescription());
 
-        // Handle radio button state
-        holder.radioButton.setChecked(selectedMenuItems.contains(item));
-
-        // Set listener for radio button click
-        holder.radioButton.setOnClickListener(v -> {
-            if (selectedMenuItems.contains(item)) {
-                selectedMenuItems.remove(item);  // Deselect item if it was already selected
-            } else {
-                selectedMenuItems.add(item);  // Select item
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(item);
             }
-            notifyDataSetChanged();  // Notify adapter to update the view
         });
     }
 
@@ -56,19 +51,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
         return itemList.size();
     }
 
-    public List<Item> getSelectedItems() {
-        return selectedMenuItems;  // Return the list of selected menu items
-    }
-
     public class ItemHolder extends RecyclerView.ViewHolder {
-
         private TextView name;
         private TextView description;
-        private RadioButton radioButton;
 
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
-
             name = itemView.findViewById(R.id.item_name);
             description = itemView.findViewById(R.id.item_description);
         }

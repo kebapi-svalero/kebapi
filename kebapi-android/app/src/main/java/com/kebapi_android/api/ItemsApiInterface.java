@@ -2,6 +2,7 @@ package com.kebapi_android.api;
 
 import java.util.List;
 
+import com.kebapi_android.domain.Customer;
 import com.kebapi_android.domain.Item;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,5 +16,7 @@ public interface ItemsApiInterface {
     Call<List<Item>> getItems();
 
     @POST("items")
-    Call<Item> addItem(@Path("id") int id, @Body Item item);
+    Call<Item> addItem(@Body Item item);
+
+
 }
