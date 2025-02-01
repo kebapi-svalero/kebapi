@@ -1,0 +1,285 @@
+openapi: 3.0.3
+info:
+  title: Kebapi
+  version: 1.0.0
+  description: API for managing kebab items and customers.
+
+servers:
+  - url: http://localhost:8080/Kebapi
+
+paths:
+  /items:
+    get:
+      summary: Get all kebab items
+      parameters:
+        - name: name
+          in: query
+          required: false
+          description: Filter items by name
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          description: Filter items by description
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of kebab items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemOutDto'
+    post:
+      summary: Create a new kebab item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemInDto'
+      responses:
+        '201':
+          description: Kebab item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemOutDto'
+
+  /items/{itemId}:
+    get:
+      summary: Get a kebab item by ID
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The ID of the kebab item
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A kebab item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemOutDto'
+        '404':
+          description: Kebab item not found
+
+    put:
+      summary: Update a kebab item by ID
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The ID of the kebab item
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemInDto'
+      responses:
+        '200':
+          description: Kebab item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemOutDto'
+        '404':
+          description: Kebab item not found
+
+    delete:
+      summary: Delete a kebab item by ID
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The ID of the kebab item
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Kebab item deleted
+        '404':
+          description: Kebab item not found
+
+  /customers:
+    get:
+      summary: Get all customers
+      parameters:
+        - name: name
+          in: query
+          required: false
+          description: Filter customers by name
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          description: Filter customers by email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerOutDto'
+    post:
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRegistrationDto'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOutDto'
+
+  /customers/{customerId}:
+    get:
+      summary: Get a customer by ID
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOutDto'
+        '404':
+          description: Customer not found
+
+    put:
+      summary: Update a customer by ID
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInDto'
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOutDto'
+        '404':
+          description: Customer not found
+
+    delete:
+      summary: Delete a customer by ID
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Customer deleted
+        '404':
+          description: Customer not found
+
+components:
+  schemas:
+    ItemInDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        isVegetarian:
+          type: boolean
+
+    ItemOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        isVegetarian:
+          type: boolean
+
+    CustomerRegistrationDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        password:
+          type: string
+
+    CustomerOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      
+
+    CustomerInDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        phone:
+          type: string
+          example: "+1234567890"
+        password:
+          type: string
+          example: "securepassword123"  # Optional, depending on your use 
+case
+
